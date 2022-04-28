@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  authorId: MyString
+  like: MyString
+  creationDate: MyString
+
+two:
+  content: MyString
+  authorId: MyString
+  like: MyString
+  creationDate: MyString
