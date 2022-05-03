@@ -2,12 +2,8 @@
 
 one:
   content: MyString
-  authorId: MyString
-  like: MyString
-  creationDate: MyString
+  user_id: 1
 
 two:
   content: MyString
-  authorId: MyString
-  like: MyString
-  creationDate: MyString
+  user_id: 1
