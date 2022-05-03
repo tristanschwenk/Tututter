@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_27_205112) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_01_201559) do
   create_table "examples", force: :cascade do |t|
     t.string "name"
     t.string "color"
@@ -30,11 +30,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_27_205112) do
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.string "userId"
+    t.string "tweetId"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tweets", force: :cascade do |t|
     t.string "content"
-    t.integer "authorId"
-    t.integer "like"
-    t.date "creationDate"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
