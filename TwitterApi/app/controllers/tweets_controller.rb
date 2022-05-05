@@ -13,9 +13,18 @@ class TweetsController < ApplicationController
   def show
   end
 
+  def byUser
+    @tweets = Tweet.where(user_id: params[:id])
+  end
+
+  def hashtag
+    @tweets = Tweet.where(["lower(content) LIKE lower(?)", "%#"+params[:hashtag]+"%"])
+  end
+
   # POST /tweets
   # POST /tweets.json
   def create
+    puts tweet_params
     @tweet = Tweet.new(tweet_params)
 
     if @tweet.save
@@ -49,6 +58,6 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:content, :user_id)
+      params.require(:tweet).permit(:content, :user_id, :is_retweet, :retweet_original_id)
     end
 end
