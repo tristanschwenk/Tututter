@@ -11,14 +11,6 @@
             </a>
           </h1>
           <div class="navbar-nav flex-row order-md-last">
-            <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-              <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
-            </a>
-            <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-              <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="4" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
-            </a>
             <div class="nav-item dropdown d-none d-md-flex me-3">
               <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
                 <!-- Download SVG icon from http://tabler-icons.io/i/bell -->
@@ -33,99 +25,58 @@
                 </div>
               </div>
             </div>
-            <div class="nav-item dropdown">
+            <div v-if="userLog" class="nav-item dropdown">
               <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)">TS</span>
+                <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)">{{getInitials(userLog.firstname, userLog.lastname)}}</span>
                 <div class="d-none d-xl-block ps-2">
-                  <div>Paweł Kuna</div>
-                  <div class="mt-1 small text-muted">UI Designer</div>
+                  <div>{{userLog.firstname}} {{userLog.lastname}}</div>
+                  <div class="mt-1 small text-muted">@{{userLog.username}}</div>
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <a href="#" class="dropdown-item">Set status</a>
                 <a href="#" class="dropdown-item">Profile & account</a>
-                <a href="#" class="dropdown-item">Feedback</a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">Settings</a>
-                <a href="#" class="dropdown-item">Logout</a>
+                <a class="dropdown-item" @click.prevent="logout">Logout</a>
               </div>
             </div>
+            <div v-else class="nav-item">
+              <nuxt-link to="/auth/sign-in">
+                <button class="btn">Login</button>
+              </nuxt-link>
+            </div>
           </div>
-        </div>
-    </header>
-    <div class="navbar-expand-md">
-        <div class="collapse navbar-collapse" id="navbar-menu">
-          <div class="navbar navbar-light">
-            <div class="container-xl">
+          <div class="collapse navbar-collapse" id="navbar-menu">
+            <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
               <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="./index.html" >
+                  <li class="nav-item">
+                  <nuxt-link class="nav-link" to="/" >
                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="5 12 3 12 12 3 21 12 19 12" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
                     </span>
                     <span class="nav-link-title">
-                      Accueil
+                      Home
                     </span>
-                  </a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
-                    <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
-                    </span>
-                    <span class="nav-link-title">
-                      Extra
-                    </span>
-                  </a>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="./activity.html" >
-                      Activity
-                    </a>
-                    <a class="dropdown-item" href="./gallery.html" >
-                      Gallery
-                    </a>
-                    <a class="dropdown-item" href="./invoice.html" >
-                      Invoice
-                    </a>
-                    <a class="dropdown-item" href="./search-results.html" >
-                      Search results
-                    </a>
-                    <a class="dropdown-item" href="./pricing.html" >
-                      Pricing cards
-                    </a>
-                    <a class="dropdown-item" href="./users.html" >
-                      Users
-                    </a>
-                    <a class="dropdown-item" href="./license.html" >
-                      License
-                    </a>
-                    <a class="dropdown-item" href="./music.html" >
-                      Music
-                    </a>
-                    <a class="dropdown-item" href="./widgets.html" >
-                      Widgets
-                    </a>
-                    <a class="dropdown-item" href="./wizard.html" >
-                      Wizard
-                    </a>
-                  </div>
+                  </nuxt-link>
                 </li>
               </ul>
-              <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-                <form action="." method="get">
-                  <div class="input-icon">
-                    <span class="input-icon-addon">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/search -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
-                    </span>
-                    <input type="text" class="form-control" placeholder="Search…" aria-label="Search in website">
-                  </div>
-                </form>
-              </div>
             </div>
           </div>
         </div>
-    </div>
+    </header>
   </div>
 </template>
 
+<script setup>
+import { useContext, useRouter } from '@nuxtjs/composition-api'
+import { getInitials } from '../helpers/getInitals';
+
+const {$auth} = useContext()
+const router = useRouter()
+
+const userLog = $auth.$state.user
+
+const logout = () => {
+  $auth.logout();
+  router.push("/login")
+}
+</script>
