@@ -1,4 +1,4 @@
-class UserController < ApplicationController
+class UsersController < ApplicationController
     before_action :authenticate_user!
     def index
         users = User.all.select(:id, :email)
@@ -6,7 +6,6 @@ class UserController < ApplicationController
     end
 
     def show
-        user = User.find(params[:id])
-        render json: user
+        @user = User.where(id: params[:id]).or(User.where(username: params[:id]))
     end
 end
