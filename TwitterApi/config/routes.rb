@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   devise_for :registrations
+  
   scope :api, defaults: {format: :json} do
       resources :examples
+      resources :likes
+      resources :follows
       resources :tweets
       devise_for :users, controllers: {sessions: 'sessions', registrations: 'users/registrations'}
 
