@@ -1,17 +1,11 @@
 <template>
   <div class="page-wrapper">
-    <div class="container-xl">
-      <h1>Fil d'actualité</h1>
+    <div class="container-xl mt-4">
+      <h1>Feed</h1>
     </div>
 
     <div class="page-body">
       <div class="container-xl">
-        <ul>
-          <li v-for="example in examples" :key="example.id">
-            {{ example.name }}
-          </li>
-        </ul>
-
         <div class="mb-4">
           <textarea
             class="form-control mb-2"
@@ -21,19 +15,13 @@
             ref="tweetContent"
           ></textarea>
           <div class="d-flex justify-content-end">
-            <button class="btn btn-primary" @click.prevent="sendTweet">Postez !</button>
+            <button class="btn btn-primary" @click.prevent="sendTweet">Post !</button>
           </div>
         </div>
 
         <div class="mb-3">
           <div v-for="tweet in tweets" :key="tweet.id" class="card mb-3">
-            <div class="card-body">
-              <h3 class="card-title">{{tweet.user.email}}</h3>
-              <p class="text-muted">
-                {{tweet.content}}
-              </p>
-            </div>
-            <div class="card-footer">This is standard card footer</div>
+            <Tweet :content="tweet"  @refresh="fetch"/>
           </div>
         </div>
       </div>
@@ -41,20 +29,41 @@
   </div>
 </template>
 
-<script>
+<style lang="scss" scoped>
+  .card-title {
+    h3 {
+      margin: 0;
+      text-transform: capitalize;
+    }
+
+    h4.text-muted {
+        font-weight: 400;
+
+      }
+  }
+</style>
+
+<script setup>
 import { useContext, useFetch, ref } from "@nuxtjs/composition-api";
+import { getInitials } from "../helpers/getInitals";
+import { orderByCreationDate } from "../helpers/orderByDates";
+import moment from "moment"
 
-export default {
-  setup() {
     const { $axios, $auth } = useContext();
+    const loggedUser = $auth.$state.user
 
-    const examples = ref("");
+
     const tweets = ref("");
     const tweetContent = ref("")
 
+    const getInit = (a,b) => {
+      return getInitials(a,b)
+    }
+
     const { fetch, fetchState } = useFetch(async () => {
-      examples.value = await $axios.$get("/examples");
-      tweets.value = await $axios.$get("/tweets");
+      let response = await $axios.$get("/tweets");
+
+      tweets.value = response.sort(orderByCreationDate)
     });
 
     const sendTweet = async () => {
@@ -68,7 +77,4 @@ export default {
       fetch()
     }
 
-    return { examples, tweets, tweetContent, sendTweet };
-  },
-};
 </script>
